@@ -1,0 +1,408 @@
+﻿<Window x:Class="TaskUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:TaskUI.Lib;assembly=TaskUI.Lib"
+        xmlns:src="clr-namespace:TaskUI"
+        xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
+        Title="Data Collector"
+        Width="860"
+        SizeToContent="Height"
+        Icon="images/logo.ico"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
+        StateChanged="Window_StateChanged" Loaded="Window_Loaded">
+    <DockPanel LastChildFill="True" Background="{DynamicResource ThemeBackground}">
+        <StackPanel DockPanel.Dock="Bottom">
+            <DockPanel Height="26"
+                   LastChildFill="False"
+                   Background="#f0f0f0">
+                <StatusBar Name="StatusBar"
+                       DockPanel.Dock="Top"
+                       Padding="5,0">
+                    <StatusBarItem DockPanel.Dock="Left">
+                        <TextBlock Name="StatusMessage"
+                               MouseLeftButtonDown="StatusMessage_MouseLeftButtonDown">Data Collector</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal"
+                                Panel.ZIndex="9999">
+                            <Image Name="StatusIcon"
+                               Visibility="Collapsed"
+                               Source="images/net.png" />
+                            <StackPanel.Resources>
+                                <Style TargetType="Image">
+                                    <Setter Property="Margin"
+                                        Value="5,0"></Setter>
+                                    <Setter Property="Width"
+                                        Value="16"></Setter>
+                                    <Setter Property="Height"
+                                        Value="16"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
+
+            <RichTextBox Name="Logs"
+                     Visibility="Collapsed"
+                     IsReadOnly="True"
+                     VirtualizingPanel.IsVirtualizing="True"
+                     VirtualizingPanel.ScrollUnit="Item"
+                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     Height="160">
+                <FlowDocument Name="LogsText"
+                          PageWidth="1000"
+                          FontSize="11">
+                </FlowDocument>
+            </RichTextBox>
+
+            <tb:TaskbarIcon Name="Taskbar"
+                        DoubleClickCommand="{StaticResource ToggleWindowCommand}"
+                        DoubleClickCommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}"
+                        IconSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=Icon}"
+                        ToolTip="{Binding Name}">
+                <tb:TaskbarIcon.TrayToolTip>
+                    <Border Background="{DynamicResource ThemeBackground}"
+                        Padding="3"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        CornerRadius="2">
+                        <TextBlock Foreground="{DynamicResource ThemeForeground}">
+                            <Run Name="Taskbar_Title"></Run>
+                        </TextBlock>
+                    </Border>
+                </tb:TaskbarIcon.TrayToolTip>
+            </tb:TaskbarIcon>
+        </StackPanel>
+
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="8">
+            <StackPanel DockPanel.Dock="Left" Width="200" Background="White">
+                <ListView Name="ProjectList" SelectionChanged="ProjectList_SelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="l:Project">
+                            <DockPanel LastChildFill="True" Height="30" Margin="5">
+                                <Image Source="images/busy.png" DockPanel.Dock="Left"></Image>
+                                <DockPanel DockPanel.Dock="Right">
+                                    <TextBlock DockPanel.Dock="Top" Text="{Binding Name}"></TextBlock>
+                                    <TextBlock DockPanel.Dock="Top" Text="{Binding Url}"></TextBlock>
+                                </DockPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Right" Margin="8,0,0,0" Background="White">
+                <DockPanel LastChildFill="True"
+                   Margin="20,10,20,0">
+                    <StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <DockPanel Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       LastChildFill="True">
+                                    <Label DockPanel.Dock="Left"
+                                                       Content="Db Server"></Label>
+                                    <TextBox Text="{Binding DbServer}"></TextBox>
+                                </DockPanel>
+                                <DockPanel Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       LastChildFill="True">
+                                    <Label DockPanel.Dock="Left"
+                                                       Content="Db Name"
+                                                       HorizontalContentAlignment="Right" />
+                                    <TextBox Text="{Binding DbName}"></TextBox>
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                                       Grid.Column="0"
+                                                       LastChildFill="True">
+                                    <Label DockPanel.Dock="Left"
+                                                       Content="Db User"></Label>
+                                    <TextBox Text="{Binding DbUser}"></TextBox>
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                                       Grid.Column="1"
+                                                       LastChildFill="True">
+                                    <Label DockPanel.Dock="Left"
+                                                       Content="Password"
+                                                       HorizontalContentAlignment="Right" />
+                                    <TextBox Text="{Binding DbPassword}"></TextBox>
+                                </DockPanel>
+
+                                <DockPanel LastChildFill="True" Grid.Row="0" Grid.Column="2">
+                                    <CheckBox DockPanel.Dock="Right"
+                                            Content="Back up Database"
+                                                      ToolTip="Back up database automatically before starting task"
+                                                      IsChecked="{Binding EnableBackupDb}"></CheckBox>
+                                </DockPanel>
+
+                                <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="2">
+                                    <CheckBox DockPanel.Dock="Right"
+                                        Content="Generate Sql Scripts"
+                                                      ToolTip="Generate scripts for insert, update and delete."
+                                                      IsChecked="{Binding EnableScriptGenerate}"></CheckBox>
+                                </DockPanel>
+
+                                <Grid.Resources>
+                                    <Style TargetType="DockPanel">
+                                        <Setter Property="Margin" Value="10,10,0,0"></Setter>
+                                    </Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="Width" Value="70"></Setter>
+                                        <Setter Property="Padding" Value="0,8,10,0"></Setter>
+                                    </Style>
+                                    <Style TargetType="CheckBox">
+                                        <Setter Property="Margin" Value="20,10,10,10"></Setter>
+                                    </Style>
+                                </Grid.Resources>
+                            </Grid>
+                            <StackPanel Margin="10,10,40,10">
+                                <DockPanel LastChildFill="True">
+                                    <DockPanel DockPanel.Dock="Left">
+                                        <Label DockPanel.Dock="Left"
+                                           Content="Workspace"></Label>
+                                    </DockPanel>
+                                    <StackPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <Button Name="btnFolderDialog"
+                                                DockPanel.Dock="Right"
+                                                Margin="2,0,0,0"
+                                                Background="{Binding ElementName=Workspace, Path=Background}"
+                                                BorderBrush="{Binding ElementName=Workspace, Path=BorderBrush}"
+                                                Foreground="{Binding ElementName=Workspace, Path=Foreground}"
+                                                Click="btnFolderDialog_Click"
+                                                IsEnabled="{Binding Mode=OneWay, ElementName=btnSave,Path=IsEnabled}"
+                                                Content=" ... ">
+                                            </Button>
+                                            <TextBox Name="Workspace"
+                                                 Text="{Binding Workspace}"
+                                                 ToolTip="Double click to open this folder."
+                                                 MouseDoubleClick="Workspace_MouseDoubleClick"></TextBox>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+
+                                <DockPanel Name="PanelProxy"
+                                       Visibility="Collapsed"
+                                       LastChildFill="True">
+                                    <Label DockPanel.Dock="Left"
+                                       Content="Proxy"></Label>
+                                    <TextBox DockPanel.Dock="Left"
+                                         ToolTip="Host"
+                                         Text="{Binding ProxyHost}"
+                                         Width="120"></TextBox>
+                                    <Label DockPanel.Dock="Left"
+                                       Content=":"
+                                       Width="15"></Label>
+                                    <TextBox DockPanel.Dock="Left"
+                                         ToolTip="Port"
+                                         Text="{Binding ProxyPort}"
+                                         Width="60"></TextBox>
+                                    <Label DockPanel.Dock="Left"
+                                       HorizontalAlignment="Left"
+                                       FontSize="10"
+                                       Margin="10,0"
+                                       FontStyle="Italic"
+                                       Content="e.g. 127.0.0.1:8087"
+                                       Width="300"></Label>
+                                </DockPanel>
+                                <DockPanel LastChildFill="True" Height="30">
+                                    <Label DockPanel.Dock="Left"
+                                       Content=""></Label>
+                                    <Button Name="btnSave"
+                                        Content="Save"
+                                        Width="80"
+                                        HorizontalAlignment="Left"
+                                        Click="btnSave_Click"></Button>
+                                    <Button Name="btnTestDb"
+                                        Content="Test Database"
+                                        Width="100"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Click="btnTestDb_Click"></Button>
+                                    <Label MouseLeftButtonUp="Advance_MouseLeftButtonUp"
+                                       Margin="0,8,0,0"
+                                       Width="Auto"
+                                       Cursor="Hand"
+                                       HorizontalAlignment="Right">Advance</Label>
+                                </DockPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="Width"
+                                            Value="70"></Setter>
+                                        <Setter Property="Padding" Value="0"></Setter>
+                                    </Style>
+                                    <Style TargetType="DockPanel">
+                                        <Setter Property="Margin"
+                                            Value="0,5"></Setter>
+                                    </Style>
+                                </StackPanel.Resources>
+                            </StackPanel>
+
+                            <DockPanel.Resources>
+                                <Style TargetType="GroupBox"
+                               BasedOn="{StaticResource {x:Type GroupBox}}">
+                                    <Setter Property="Margin"
+                                    Value="0,10"></Setter>
+                                </Style>
+                            </DockPanel.Resources>
+                        </DockPanel>
+                    </StackPanel>
+                    <DockPanel.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="Width"
+                                            Value="70"></Setter>
+                            <Setter Property="Padding" Value="0"></Setter>
+                        </Style>
+                    </DockPanel.Resources>
+                </DockPanel>
+
+                <StackPanel VerticalAlignment="Center"
+                    Margin="20,0,20,10">
+                    <ItemsControl Name="ctlSwitchers"
+                          HorizontalAlignment="Left"
+                          ItemsSource="{Binding SwitchersSource}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type l:Switcher}">
+                                <CheckBox IsChecked="{Binding Value, Mode=TwoWay}"
+                                  Content="{Binding Description, Mode=OneWay}"
+                                  Click="ProjectVariable_Click"
+                                  IsEnabled="{Binding DefaultEnabled, Mode=OneTime}"
+                                  Tag="{Binding}"></CheckBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <StackPanel.Resources>
+                        <Style TargetType="CheckBox"
+                       BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Setter Property="Margin"
+                            Value="5,0,10,0"></Setter>
+                            <Setter Property="IsEnabled"
+                            Value="{Binding Mode=OneWay, ElementName=btnSave,Path=IsEnabled}"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+
+                <DockPanel LastChildFill="True"
+                   Margin="20,0,20,10">
+                    <Button Name="btnPause"
+                    DockPanel.Dock="Right"
+                    Width="42"
+                    Margin="10,0,0,0"
+                    ToolTip="Pause or Resume"
+                    Visibility="Collapsed"
+                    Click="btnPause_Click">
+                        <Button.Content>
+                            <Image Source="images/pause.png"
+                           Width="24"
+                           Height="24"></Image>
+                        </Button.Content>
+                    </Button>
+                    <Border BorderThickness="2"
+                    BorderBrush="{Binding ElementName=btnStart, Path=Background}"
+                    CornerRadius="4">
+                        <StackPanel>
+                            <Button Name="btnStart"
+                            Content="Start"
+                            Height="32"
+                            FontSize="16"
+                            BorderThickness="0"
+                            Click="btnStart_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border CornerRadius="0"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        Width="{TemplateBinding Width}"
+                                        Height="{TemplateBinding Height}"
+                                        Padding="{TemplateBinding Padding}"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"
+                                                      ContentSource="Content"></ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <ProgressBar Name="ProjectProgress"
+                                 Value="50"
+                                 Visibility="Collapsed"
+                                 Height="8"
+                                 Background="{Binding ElementName=btnStart, Path=Background}">
+                                <ProgressBar.Foreground>
+                                    <LinearGradientBrush EndPoint="0.5,1"
+                                                 StartPoint="0.5,0">
+                                        <GradientStop Color="{Binding ElementName=btnStart, Path=Foreground, Converter={StaticResource Brush2Color}}"
+                                              Offset="0" />
+                                        <GradientStop Color="{Binding ElementName=btnStart, Path=Foreground, Converter={StaticResource Brush2Color}}"
+                                              Offset="1" />
+                                        <GradientStop Color="{Binding ElementName=btnStart, Path=Background, Converter={StaticResource Brush2Color}}"
+                                              Offset="0.5" />
+                                    </LinearGradientBrush>
+                                </ProgressBar.Foreground>
+                            </ProgressBar>
+
+                        </StackPanel>
+                    </Border>
+                </DockPanel>
+
+                <StackPanel Name="CountersPanel" Visibility="Collapsed">
+                    <Border CornerRadius="0"
+                    Background="#F0E68C">
+                        <TextBlock Name="CountersSummary"
+                           Text=""
+                           Foreground="Black"
+                           Margin="10,5"></TextBlock>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+
+            <DockPanel.Resources>
+                <Style TargetType="TextBox"
+                   BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="IsEnabled"
+                        Value="{Binding Mode=OneWay, ElementName=btnSave,Path=IsEnabled}"></Setter>
+                    <Setter Property="Height"
+                        Value="28"></Setter>
+                </Style>
+                <Style TargetType="CheckBox"
+                   BasedOn="{StaticResource {x:Type CheckBox}}">
+                    <Setter Property="IsEnabled"
+                        Value="{Binding Mode=OneWay, ElementName=btnSave,Path=IsEnabled}"></Setter>
+                </Style>
+                <Style TargetType="Button"
+                   BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled"
+                        Value="{Binding Mode=OneWay, Converter={StaticResource IsNotEmpty}, RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}"></Setter>
+                    <Setter Property="Background"
+                        Value="{DynamicResource ThemeBackground}"></Setter>
+                    <Setter Property="Foreground"
+                        Value="{DynamicResource ThemeForeground}"></Setter>
+                    <Setter Property="BorderThickness"
+                        Value="1"></Setter>
+                    <Setter Property="BorderBrush"
+                        Value="Silver"></Setter>
+                </Style>
+            </DockPanel.Resources>
+        </DockPanel>
+    </DockPanel>
+</Window>
