@@ -75,10 +75,6 @@ namespace TaskUI.Tasks
 			get { return "Test Project"; }
 		}
 
-		public override string Author
-		{
-			get { return "Bendy"; }
-		}
 
 		public override Theme? Theme
 		{
@@ -100,11 +96,6 @@ namespace TaskUI.Tasks
 					new Switcher("B", "BBBBB", true)
 					);
 			}
-		}
-
-		public override bool WithUpdates
-		{
-			get { return false; }
 		}
 	}
 }

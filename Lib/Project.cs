@@ -774,8 +774,6 @@ namespace TaskUI.Lib
         protected abstract void StartTask();
         public abstract string Url { get; }
         public abstract string Name { get; }
-        public abstract string Author { get; }
-        public abstract bool WithUpdates { get; }
 
         #endregion
 
