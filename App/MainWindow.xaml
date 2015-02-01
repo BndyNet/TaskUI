@@ -15,13 +15,14 @@
     <DockPanel LastChildFill="True" Background="{DynamicResource ThemeBackground}">
         <StackPanel DockPanel.Dock="Bottom">
             <DockPanel Height="26"
-                   LastChildFill="False"
-                   Background="#f0f0f0">
+                   LastChildFill="False">
                 <StatusBar Name="StatusBar"
+                        Background="{DynamicResource ThemeBackground}"
                        DockPanel.Dock="Top"
-                       Padding="5,0">
+                       Padding="5, 0">
                     <StatusBarItem DockPanel.Dock="Left">
                         <TextBlock Name="StatusMessage"
+                               Foreground="{DynamicResource ThemeForeground}"
                                MouseLeftButtonDown="StatusMessage_MouseLeftButtonDown">Data Collector</TextBlock>
                     </StatusBarItem>
                     <StatusBarItem HorizontalAlignment="Right">
@@ -78,7 +79,7 @@
             </tb:TaskbarIcon>
         </StackPanel>
 
-        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="8">
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="8,8,8,2">
             <StackPanel DockPanel.Dock="Left" Width="200" Background="White">
                 <ListView Name="ProjectList" SelectionChanged="ProjectList_SelectionChanged">
                     <ListView.ItemTemplate>

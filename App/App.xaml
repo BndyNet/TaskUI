@@ -34,6 +34,12 @@
         <SolidColorBrush x:Key="ButtonBG" Color="White" />
         <SolidColorBrush x:Key="ButtonFG" Color="Black" />
 
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Euphemia"></Setter>
+        </Style>
+        <Style TargetType="TextElement">
+            <Setter Property="FontFamily" Value="Euphemia"></Setter>
+        </Style>
         <Style TargetType="ComboBox">
             <Setter Property="BorderBrush" Value="{StaticResource OutsideColor}" />
             <Setter Property="BorderThickness" Value="1" />

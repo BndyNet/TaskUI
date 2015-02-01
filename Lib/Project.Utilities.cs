@@ -207,7 +207,7 @@ namespace TaskUI.Lib
 		/// <returns>System.String.</returns>
 		private string DropUselessString(string html)
 		{
-			string result = html;
+            string result = html;
 
 			if (!string.IsNullOrWhiteSpace(html))
 			{
@@ -219,7 +219,7 @@ namespace TaskUI.Lib
 				result = Regex.Replace(result, @"<script[\s\S]*?</script>", "", RegexOptions.IgnoreCase);
 			}
 
-			return result;
+			return result.Trim();
 		}
 
 		/// <summary>
