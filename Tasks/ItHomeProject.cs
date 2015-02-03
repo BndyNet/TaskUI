@@ -103,6 +103,16 @@ namespace TaskUI.Tasks
             get { return "ItHome"; }
         }
 
+        protected override List<DbCounter> DbCounters
+        {
+            get
+            {
+                return new List<DbCounter>() {
+                      new DbCounter("Article", "RowId"),
+                };
+            }
+        }
+
         #region Models
 
         [Serializable]

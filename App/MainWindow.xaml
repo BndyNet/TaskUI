@@ -84,12 +84,17 @@
                 <ListView Name="ProjectList" SelectionChanged="ProjectList_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="l:Project">
-                            <DockPanel LastChildFill="True" Height="30" Margin="5">
-                                <Image Source="images/busy.png" DockPanel.Dock="Left"></Image>
+                            <DockPanel LastChildFill="True" Margin="5">
+                                <Image Source="images/busy.png" DockPanel.Dock="Left" Width="26" Height="26" Margin="0,0,5,0"></Image>
                                 <DockPanel DockPanel.Dock="Right">
-                                    <TextBlock DockPanel.Dock="Top" Text="{Binding Name}"></TextBlock>
+                                    <TextBlock DockPanel.Dock="Top" FontSize="13" Text="{Binding Name}"></TextBlock>
                                     <TextBlock DockPanel.Dock="Top" Text="{Binding Url}"></TextBlock>
                                 </DockPanel>
+                                <DockPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Visit Website" Click="BrowseUrl_Click" Tag="{Binding Url}"></MenuItem>
+                                    </ContextMenu>
+                                </DockPanel.ContextMenu>
                             </DockPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
