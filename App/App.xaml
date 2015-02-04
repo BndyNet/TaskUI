@@ -35,10 +35,10 @@
         <SolidColorBrush x:Key="ButtonFG" Color="Black" />
 
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Euphemia"></Setter>
+            <Setter Property="FontFamily" Value="Euphemia" />
         </Style>
         <Style TargetType="TextElement">
-            <Setter Property="FontFamily" Value="Euphemia"></Setter>
+            <Setter Property="FontFamily" Value="Euphemia" />
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="BorderBrush" Value="{StaticResource OutsideColor}" />
@@ -54,9 +54,9 @@
                         <Border Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderBrush="Silver"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="4"
+                                CornerRadius="0"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
@@ -80,22 +80,25 @@
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="{StaticResource OutsideColor}" />
-            <Setter Property="Template">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Silver" />
+            <!--<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBoxBase}">
                         <Border x:Name="Bd"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="4">
+                                CornerRadius="0">
                             <ScrollViewer x:Name="PART_ContentHost"
                                           VerticalAlignment="Center"
                                           Padding="5,0" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>
+            </Setter>-->
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="{StaticResource DisabledBG}" />
@@ -123,16 +126,18 @@
                             <Border Name="PART_Track"
                                     Background="{TemplateBinding Background}"
                                     BorderThickness="0"
-                                    CornerRadius="0,0,4,4" />
+                                    CornerRadius="0" />
                             <Border x:Name="PART_Indicator"
                                     HorizontalAlignment="Left"
                                     Background="{TemplateBinding Foreground}"
                                     BorderThickness="0"
-                                    CornerRadius="3" />
+                                    CornerRadius="0" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
 
     </Application.Resources>

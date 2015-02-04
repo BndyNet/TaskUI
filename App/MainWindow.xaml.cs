@@ -363,6 +363,7 @@ namespace TaskUI
             this.LogsText.Blocks.Clear();
             this.CountersPanel.Visibility = System.Windows.Visibility.Collapsed;
             this.Title = _currentProject.Name;
+            this.btnStart.Content = "Start";
         }
 
         private void btnFolderDialog_Click(object sender, RoutedEventArgs e)
@@ -453,19 +454,22 @@ namespace TaskUI
 
         private void Project_DefaultActionChanged(ActionChangedEventArgs e)
         {
-            var titleFormat = string.Format("{0} - {{0}} requests, {{1}} downloads, ~{{2}} affected rows, {{3}} errors",
-                e.Project.Name);
-
             UpdateStatus(e.Description, StatusBarFlag.Normal, e.ActionTime);
 
             UpdateUI(() =>
             {
+                var titleFormat = e.Project.Name;
+                if (e.Project.StartInfo.Requests > 0)
+                    titleFormat += string.Format(" - {0} requests", e.Project.StartInfo.Requests);
+                if (e.Project.StartInfo.Downloads > 0)
+                    titleFormat += string.Format(", {0} downloads", e.Project.StartInfo.Downloads);
+                if (e.Project.StartInfo.AffectedRows > 0)
+                    titleFormat += string.Format(", ~{0} affected rows,", e.Project.StartInfo.AffectedRows);
+                if (e.Project.StartInfo.ErrorCount > 0)
+                    titleFormat += string.Format(", {0} errors", e.Project.StartInfo.ErrorCount);
+
+                this.Title = titleFormat;
                 this.CountersSummary.Text = _currentProject.GetCountersSummary();
-                this.Title = string.Format(titleFormat,
-                    e.Project.StartInfo.Requests,
-                    e.Project.StartInfo.Downloads,
-                    e.Project.StartInfo.AffectedRows,
-                    e.Project.StartInfo.ErrorCount);
 
                 if (!_currentProject.RequireHighPerformance)
                 {

@@ -43,21 +43,21 @@ namespace TaskUI.Tasks
 						//	_err = true;
 						//}
 
-						var url = "https://code.msdn.microsoft.com/vstudio__";
-						var html =TryRequest(ref url);
+						//var url = "https://code.msdn.microsoft.com/vstudio";
+						//var html =TryRequest(ref url);
 
-						Import2Database("Test", new { 
-							dt = DateTime.Now,
-						});
+						//Import2Database("Test", new { 
+						//	dt = DateTime.Now,
+						//});
 
-						//System.Threading.Thread.Sleep(2000);
+                        System.Threading.Thread.Sleep(500);
 
-						int xxxx = 3232;
+                        int xxxx = 3232;
 
 						var p = GetProgressValue(new int[] { a, b, c },
 							new int[] { t1, t2, t3 });
 
-						Dump(string.Format("Title {0}, Chapter {1}, Sec {2}", a, b, c));
+						Dump(string.Format("{0}/{1}/{2}", a, b, c));
 
 						SetProgress(p);
 					}

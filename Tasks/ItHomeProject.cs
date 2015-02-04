@@ -102,6 +102,13 @@ namespace TaskUI.Tasks
         {
             get { return "ItHome"; }
         }
+        public override string Icon
+        {
+            get
+            {
+                return "http://www.ithome.com/favicon.ico";
+            }
+        }
 
         protected override List<DbCounter> DbCounters
         {

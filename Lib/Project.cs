@@ -311,7 +311,8 @@ namespace TaskUI.Lib
                     || string.IsNullOrWhiteSpace(this.DbPassword)
                     || string.IsNullOrWhiteSpace(this.DbServer)
                     || string.IsNullOrWhiteSpace(this.DbUser)
-                ) return null;
+                )
+                    return null;
 
                 return string.Format("Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}",
                     this.DbServer, this.DbName, this.DbUser, this.DbPassword);
@@ -757,6 +758,13 @@ namespace TaskUI.Lib
                 return null;
             }
         }
+        public virtual string Icon
+        {
+            get
+            {
+                return "Images/task.png";
+            }
+        }
         public virtual SwitcherCollection Switchers
         {
             get
@@ -774,6 +782,8 @@ namespace TaskUI.Lib
         protected abstract void StartTask();
         public abstract string Url { get; }
         public abstract string Name { get; }
+
+
 
         #endregion
 
