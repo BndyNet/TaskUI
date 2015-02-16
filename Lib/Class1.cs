@@ -1,8 +1,8 @@
 ﻿// =================================================================================
 // Copyright (c) 2014 Bndy.Net
-// Created by Bndy at 8/14/2014 8:53:23
+// Created by Bndy at 2/16/2015 11:46:06 PM
 // ---------------------------------------------------------------------------------
-// Summary & Change Logs.
+// Summary & Changes
 // =================================================================================
 
 using System;
@@ -13,14 +13,7 @@ using System.Threading.Tasks;
 
 namespace TaskUI.Lib
 {
-	public struct Theme
-	{
-		public string BackgroundColor;
-		public string ForegroundColor;
-		public Theme(string backgroundColor, string foregroundColor)
-		{
-			this.BackgroundColor = backgroundColor;
-			this.ForegroundColor = foregroundColor;
-		}
-	}
+    class Class1
+    {
+    }
 }

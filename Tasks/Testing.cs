@@ -1,6 +1,6 @@
 ﻿// =================================================================================
-// Copyright (c) 2014 CommerNet Co., Ltd.
-// Created by Bendy at 9/4/2014 10:11:32
+// Copyright (c) 2014 Bndy.Net
+// Created by Bndy at 9/4/2014 10:11:32
 // ---------------------------------------------------------------------------------
 // Summary & Change Logs.
 // =================================================================================
@@ -20,10 +20,16 @@ namespace TaskUI.Tasks
 		public Testing()
 		{
 			this.RequireCheckConfig = false;
+
+            this.Fields = new List<ProjectFieldInfo>() {
+                    new ProjectFieldInfo("1"),
+                    new ProjectFieldInfo("2")
+            };
 		}
 
 		protected override void StartTask()
 		{
+            var f1 = GetFieldValue("1");
 			var t1 = 1;
 			var t2 = 10;
 			var t3 = 10;

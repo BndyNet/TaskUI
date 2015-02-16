@@ -323,6 +323,22 @@
                     </StackPanel.Resources>
                 </StackPanel>
 
+                <StackPanel Margin="20,5,20,10">
+                    <ItemsControl Name="Fields" ItemsSource="{Binding Fields}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type l:ProjectFieldInfo}">
+                                <DockPanel LastChildFill="True">
+                                    <Label MinWidth="100"
+                                           Content="{Binding Name}"
+                                           DockPanel.Dock="Left" />
+                                    <TextBox Text="{Binding Value}" />
+                                </DockPanel>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
                 <DockPanel Margin="20,5,20,10" LastChildFill="True">
                     <Button Name="btnPause"
                             Width="42"

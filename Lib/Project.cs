@@ -1,6 +1,6 @@
 ﻿// =================================================================================
-// Copyright (c) 2014 CommerNet Co., Ltd.
-// Created by Bendy at 8/5/2014 11:19:52
+// Copyright (c) 2014 Bndy.Net
+// Created by Bndy at 8/5/2014 11:19:52
 // ---------------------------------------------------------------------------------
 // Abstract class about Project, all projects MUST implement this class for startup.
 // =================================================================================
@@ -56,6 +56,7 @@ namespace TaskUI.Lib
         private string _dataVersion;
         private SwitcherCollection _switchersSource;
         private List<DbCounter> _dbCounters;
+        private List<ProjectFieldInfo> _fields;
         private bool _inPause = false;
 
         private string _encoding = "utf-8";
@@ -303,6 +304,19 @@ namespace TaskUI.Lib
             }
         }
         [XmlIgnore]
+        public List<ProjectFieldInfo> Fields
+        {
+            get
+            {
+                return _fields;
+            }
+            set
+            {
+                _fields = value;
+                OnPropertyChanged();
+            }
+        }
+        [XmlIgnore]
         public string ConnectionString
         {
             get
@@ -539,6 +553,24 @@ namespace TaskUI.Lib
             }
 
             return "No Counters";
+        }
+
+        public string GetFieldValue(string fieldName)
+        {
+            if (this.Fields != null)
+            {
+                var f = this.Fields.FirstOrDefault(__ =>
+                {
+                    return __.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase);
+                });
+
+                if (f != null)
+                {
+                    return f.Value;
+                }
+            }
+
+            return null;
         }
 
         public void ResetDbCounters()
